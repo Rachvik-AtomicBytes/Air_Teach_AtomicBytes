@@ -4,6 +4,7 @@ LiquidCrystal lcd(13, 12, 8, 7, 4, 2);
 
 int sensorPin = A0;
 int buzzerPin = 13;
+int Count = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -41,10 +42,16 @@ void loop() {
     while (millis() - startTime < delayDuration) {
       if (sensorValue == HIGH) {
         digitalWrite(buzzerPin, LOW);
+        
       }
       // Additional conditions and actions here if needed
     }
-
+    Count = Count+1;
+    lcd.setCursor(0, 1);
+    lcd.print("Beeps: ");
+    lcd.print(Count);
+    delay(1000);
+    lcd.clear();
     
     lcd.clear();
   } else if (sensorValue == LOW) {
@@ -67,8 +74,13 @@ void loop() {
       }
       // Additional conditions and actions here if needed
     }
-
+    Count = Count+1;
     
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Beeps: ");
+    lcd.print(Count);
+    delay(1000);
     lcd.clear();
   }
 }
