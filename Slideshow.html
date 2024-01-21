@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        #slideshow-container {
+            max-width: 600px;
+            margin: auto;
+            overflow: hidden;
+        }
+        #slides-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .slide {
+            display: none;
+        }
+        #slideshow-nav {
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <title>Dynamic Slideshow</title>
+    <!-- Include jQuery from CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<div id="slideshow-container">
+    <form id="slides-form">
+        <!-- Slide content will be dynamically added here -->
+    </form>
+    <div id="slideshow-nav">
+        <button id="prevBtn" style="display: none;">Previous</button>
+        <button id="nextBtn" style="display: none;">Next</button>
+        <button id="moveToVoiceBtn" style="display: none;">Move to Voice Assistant</button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Initialize variables to keep track of the current slide and total slides
+        var currentSlide = 0;
+        var totalSlides = 0;
+
+        // Function to show a specific slide
+        function showSlide(index) {
+            // Hide all slides and show the selected one
+            $('.slide').hide();
+            $('#slide' + index).fadeIn();
+            // Update the current slide index
+            currentSlide = index;
+            // Update the visibility of navigation buttons
+            updateButtons();
+        }
+
+        // Function to update the visibility of navigation buttons
+        function updateButtons() {
+            // Toggle visibility of 'Previous' button based on the current slide index
+            $('#prevBtn').toggle(currentSlide > 0);
+            // Toggle visibility of 'Next' button based on the current slide index
+            $('#nextBtn').toggle(currentSlide < totalSlides - 1);
+            // Toggle visibility of 'Move to Voice Assistant' button at the end of the slideshow
+            $('#moveToVoiceBtn').toggle(currentSlide === totalSlides - 1);
+        }
+
+        
+        function startSlideshow() {
+            
+            totalSlides = parseInt(prompt("Enter the number of slides:"));
+
+            
+            for (var i = 0; i < totalSlides; i++) {
+                var slideContent = prompt("Enter content for slide " + (i + 1) + ":");
+                
+                $('#slides-form').append('<div class="slide" id="slide' + i + '">' + slideContent + '</div>');
+            }
+
+            
+            showSlide(0);
+
+            $('#prevBtn').click(function () {
+                if (currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                }
+            });
+
+            $('#nextBtn').click(function () {
+                if (currentSlide < totalSlides - 1) {
+                    showSlide(currentSlide + 1);
+                }
+            });
+
+            $('#moveToVoiceBtn').click(moveToVoiceAssistant);
+        }
+
+        startSlideshow();
+    });
+</script>
+</body>
+</html>

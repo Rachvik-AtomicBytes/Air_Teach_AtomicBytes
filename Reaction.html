@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Time Tester</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #target {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="target" onclick="startTimer()">Click Me!</div>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        let startTime, endTime;
+
+        function startTimer() {
+            startTime = new Date().getTime();
+            document.getElementById('target').style.display = 'none';
+            setTimeout(endTimer, Math.floor(Math.random() * 5000) + 1000);
+        }
+
+        function endTimer() {
+            document.getElementById('target').style.display = 'flex';
+            endTime = new Date().getTime();
+            const reactionTime = (endTime - startTime) / 1000;
+            document.getElementById('result').innerText = `Your reaction time: ${reactionTime.toFixed(3)} seconds`;
+        }
+    </script>
+</body>
+</html>

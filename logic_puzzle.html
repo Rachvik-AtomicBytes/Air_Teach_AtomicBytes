@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic Puzzles</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #4a90e2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        #puzzle-container {
+            max-width: 600px;
+            margin: 20px;
+            padding: 40px;
+            border: 2px solid #4a90e2;
+            border-radius: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #puzzle-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #puzzle-text {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #333333;
+        }
+
+        #user-answer {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #4a90e2;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #ffffff;
+            background-color: #4a90e2;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3668b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Logic Puzzles</h1>
+    <div id="puzzle-container">
+        <form id="puzzle-form">
+            <p id="puzzle-text"></p>
+            <input type="text" id="user-answer" placeholder="Your answer" required>
+            <button type="button" onclick="checkAnswer()">Submit Answer</button>
+            <button type="button" onclick="nextPuzzle()">Next Puzzle</button>
+        </form>
+    </div>
+
+    <script>
+         const logicPuzzles = [
+            { question: "I am taken from a mine, and shut up in a wooden case, from which I am never released, and yet I am used by almost every person. What am I?", answer: "pencil" },
+            { question: "The more you take, the more you leave behind. What am I?", answer: "footsteps" },
+            { question: "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?", answer: "echo" },
+            { question: "The person who makes it, sells it. The person who buys it never uses it. What is it?", answer: "coffin" },
+            { question: "What has keys but can't open locks?", answer: "piano" },
+            { question: "I have cities but no houses, mountains but no trees, and water but no fish. What am I?", answer: "map" },
+            { question: "The more you take, the more you leave behind. What am I?", answer: "footsteps" },
+            { question: "Forward I am heavy, but backward I am not. What am I?", answer: "ton" },
+            { question: "I have keys but open no locks. I have space but no room. You can enter, but you can't go inside. What am I?", answer: "keyboard" },
+            { question: "I am not alive, but I grow. I don't have lungs, but I need air. What am I?", answer: "fire" },
+            { question: "What has a heart that doesn't beat?", answer: "artichoke" },
+            { question: "The more you take, the more you leave behind. What am I?", answer: "footsteps" },
+];
+
+
+        let currentPuzzleIndex = 0;
+
+        function displayPuzzle() {
+            const currentPuzzle = logicPuzzles[currentPuzzleIndex];
+            document.getElementById("puzzle-text").textContent = currentPuzzle.question;
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById("user-answer").value.toLowerCase();
+            const currentPuzzle = logicPuzzles[currentPuzzleIndex];
+
+            if (userAnswer === currentPuzzle.answer) {
+                alert("Correct! Well done.");
+            } else {
+                alert("Incorrect. Try again!");
+            }
+        }
+
+        function nextPuzzle() {
+            if (currentPuzzleIndex < logicPuzzles.length - 1) {
+                currentPuzzleIndex++;
+                displayPuzzle();
+            } else {
+                alert("You've completed all the puzzles!");
+            }
+        }
+        displayPuzzle();
+    </script>
+</body>
+</html>
+

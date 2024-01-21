@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Practice</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      margin: 20px;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #333333;
+    }
+    label {
+      display: block;
+      font-size: 18px;
+      margin: 10px;
+    }
+    select, input, button {
+      margin: 10px;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #problemContainer {
+      font-size: 18px;
+      margin-top: 20px;
+      background-color: #ffffff;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    #feedbackContainer {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333333;
+    }
+  </style>
+  <script>
+    function generateProblem() {
+      // Get selected topic
+      const topic = document.getElementById('topic').value;
+
+      // Generate random numbers for the problem
+      const num1 = Math.floor(Math.random() * 10) + 1;
+      const num2 = Math.floor(Math.random() * 10) + 1;
+
+      // Generate the math problem based on the selected topic
+      let problem, correctAnswer;
+      switch (topic) {
+        case 'addition':
+          problem = `${num1} + ${num2}`;
+          correctAnswer = (num1 + num2).toFixed(2);
+          break;
+        case 'subtraction':
+          problem = `${num1} - ${num2}`;
+          correctAnswer = (num1 - num2).toFixed(2);
+          break;
+        case 'multiplication':
+          problem = `${num1} * ${num2}`;
+          correctAnswer = (num1 * num2).toFixed(2);
+          break;
+        case 'division':
+          // Ensure num2 is not zero for division
+          num2 !== 0 ? problem = `${num1} / ${num2}` : generateProblem();
+          correctAnswer = (num1 / num2).toFixed(2);
+          break;
+        case 'trigonometry':
+          const angle = Math.floor(Math.random() * 90) + 1;
+          const trigFunction = Math.random() < 0.5 ? 'sin' : 'cos';
+          problem = `Calculate ${trigFunction}(${angle}°)`;
+          correctAnswer = trigFunction === 'sin' ? Math.sin(angle).toFixed(2) : Math.cos(angle).toFixed(2);
+          break;
+        case 'area':
+          const shape = Math.random() < 0.5 ? 'triangle' : 'rectangle';
+          problem = `Calculate the area of a ${shape} with dimensions ${num1} and ${num2}`;
+          correctAnswer = shape === 'triangle' ? (0.5 * num1 * num2).toFixed(2) : (num1 * num2).toFixed(2);
+          break;
+        default:
+          break;
+      }
+
+      // Display the generated problem
+      document.getElementById('problemContainer').textContent = `Solve: ${problem}`;
+
+      // Store the correct answer for later comparison
+      document.getElementById('correctAnswer').value = correctAnswer;
+
+      // Clear previous feedback
+      document.getElementById('feedbackContainer').textContent = '';
+    }
+
+    function checkAnswer() {
+      // Get user's answer and the correct answer
+      const userAnswer = parseFloat(document.getElementById('userAnswer').value);
+      const correctAnswer = parseFloat(document.getElementById('correctAnswer').value);
+
+      // Check correctness and provide feedback
+      const feedbackContainer = document.getElementById('feedbackContainer');
+      if (!isNaN(userAnswer) && userAnswer.toFixed(2) == correctAnswer) {
+        feedbackContainer.textContent = 'Correct! Well done.';
+      } else {
+        feedbackContainer.textContent = 'Incorrect. Try again.';
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Math Practice</h1>
+  <label for="topic">Select Topic:</label>
+  <select id="topic">
+    <option value="addition">Addition</option>
+    <option value="subtraction">Subtraction</option>
+    <option value="multiplication">Multiplication</option>
+    <option value="division">Division</option>
+    <option value="trigonometry">Trigonometry</option>
+    <option value="area">Area (Triangle/Rectangle)</option>
+  </select>
+  <button onclick="generateProblem()">Generate Problem</button>
+
+  <div id="problemContainer"></div>
+
+  <label for="userAnswer">Your Answer:</label>
+  <input type="number" id="userAnswer" placeholder="Enter your answer" step="0.01">
+  <button onclick="checkAnswer()">Check Answer</button>
+
+  <div id="feedbackContainer"></div>
+
+  <!-- Hidden input to store correct answer for comparison -->
+  <input type="hidden" id="correctAnswer">
+</body>
+</html>
